@@ -1,10 +1,13 @@
 package com.sample.test.demo;
 
 import static org.testng.Assert.fail;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import com.sample.test.demo.util.ElementActions;
 
 public class TestBase {
 
@@ -18,10 +21,11 @@ public class TestBase {
         url = config.getUrl();
         initializelDriver();
         navigateToSite();
-    }
+       }
 
     private void navigateToSite() {
         driver.get(url);
+        System.out.println("The URL is : "+url);
     }
 
     @AfterClass(alwaysRun = true)
@@ -35,11 +39,13 @@ public class TestBase {
 
     private void initializelDriver() {
         if (config.getBrowser().equalsIgnoreCase("chrome")) {
-            if (config.getPlatform().equalsIgnoreCase("mac")) {
-                System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver/mac/chromedriver");
+            if (config.getPlatform().equalsIgnoreCase("windows")) {
+//                WebDriverManager.chromedriver().setup();
+                System.setProperty("webdriver.chrome.driver","src/test/resources/chromedriver/windows/chromedriver.exe");
+
             } else {
-                System.setProperty("webdriver.chrome.driver",
-                        "src/test/resources/chromedriver/windows/chromedriver.exe");
+//                WebDriverManager.chromedriver().setup();
+                System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver/mac/chromedriver");
             }
             driver = new ChromeDriver();
         }
